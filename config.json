@@ -1,0 +1,38 @@
+{
+  "siteName": "Cal Freeman",
+  "siteTitle": "Cal Freeman | Writer & Director",
+  "author": "Cal Freeman",
+  "email": "contact@calfreeman.com",
+  "year": 2026,
+  "social": {
+    "instagram": "https://instagram.com",
+    "youtube": "https://youtube.com",
+    "imdb": "https://imdb.com"
+  },
+  "portfolio": [
+    {
+      "id": 1,
+      "title": "Project Title 1",
+      "description": "Brief description of your film or project. Share the story, inspiration, and creative vision behind this work.",
+      "videoUrl": "https://placeholder-video.mp4"
+    },
+    {
+      "id": 2,
+      "title": "Project Title 2",
+      "description": "Brief description of your film or project. Share the story, inspiration, and creative vision behind this work.",
+      "videoUrl": "https://placeholder-video.mp4"
+    },
+    {
+      "id": 3,
+      "title": "Project Title 3",
+      "description": "Brief description of your film or project. Share the story, inspiration, and creative vision behind this work.",
+      "videoUrl": "https://placeholder-video.mp4"
+    },
+    {
+      "id": 4,
+      "title": "Project Title 4",
+      "description": "Brief description of your film or project. Share the story, inspiration, and creative vision behind this work.",
+      "videoUrl": "https://placeholder-video.mp4"
+    }
+  ]
+}
