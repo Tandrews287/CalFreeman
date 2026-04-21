@@ -1,10 +1,11 @@
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const chapters = Array.from(document.querySelectorAll('.work-chapter'));
 const contactButton = document.querySelector('.contact-button');
 const contactModal = document.querySelector('.contact-modal');
 const contactCloseTargets = Array.from(document.querySelectorAll('[data-contact-close]'));
+const revealTargets = document.querySelectorAll('.profile-panel, .project-panel');
+const projectPanels = Array.from(document.querySelectorAll('[data-project-panel]'));
+const filterControls = Array.from(document.querySelectorAll('[data-filter-control]'));
 let modalScrollY = 0;
-let scrollFrame = null;
 
 if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
@@ -25,77 +26,109 @@ if (prefersReducedMotion) {
     });
 }
 
-const revealTargets = document.querySelectorAll('.profile-panel, .work-chapter');
+function revealElement(element) {
+    element.classList.add('is-revealed');
+}
 
 if (prefersReducedMotion) {
-    revealTargets.forEach((element) => {
-        element.classList.add('is-revealed');
-    });
+    revealTargets.forEach(revealElement);
 } else if ('IntersectionObserver' in window) {
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('is-revealed');
+                revealElement(entry.target);
                 revealObserver.unobserve(entry.target);
             }
         });
     }, {
-        threshold: 0.16,
-        rootMargin: '0px 0px -8% 0px',
+        threshold: 0.14,
+        rootMargin: '0px 0px -6% 0px',
     });
 
     revealTargets.forEach((element) => {
         revealObserver.observe(element);
     });
 } else {
-    revealTargets.forEach((element) => {
-        element.classList.add('is-revealed');
-    });
+    revealTargets.forEach(revealElement);
 }
 
-function updateChapterState(chapter) {
-    const slides = Array.from(chapter.querySelectorAll('.work-slide'));
-    if (!slides.length) {
+function setPreviewState(panel, control) {
+    const previewImage = panel.querySelector('[data-project-image]');
+    const previewTitle = panel.querySelector('[data-project-title]');
+    const previewDate = panel.querySelector('[data-project-date]');
+    const previewNumber = panel.querySelector('[data-project-number]');
+    const controls = Array.from(panel.querySelectorAll('[data-preview-control]'));
+
+    if (!previewImage || !previewTitle || !previewDate || !previewNumber) {
         return;
     }
 
-    const chapterTop = chapter.getBoundingClientRect().top + window.scrollY;
-    const chapterHeight = Math.max(chapter.offsetHeight - window.innerHeight, window.innerHeight);
-    const centerLine = window.scrollY + window.innerHeight * 0.5;
-    const centeredStart = chapterTop - window.innerHeight * 0.5;
-    const progress = Math.min(1, Math.max(0, (window.scrollY - centeredStart) / chapterHeight));
-    const slideProgress = progress * (slides.length - 1);
-    const chapterVisible = centerLine >= chapterTop;
+    previewImage.src = control.dataset.previewSrc || previewImage.src;
+    previewImage.alt = control.dataset.previewAlt || previewImage.alt;
+    previewTitle.textContent = control.dataset.previewTitle || previewTitle.textContent;
+    previewDate.textContent = control.dataset.previewDate || previewDate.textContent;
+    previewNumber.textContent = control.dataset.previewNumber || previewNumber.textContent;
 
-    chapter.classList.toggle('is-visible', chapterVisible);
-
-    slides.forEach((slide, index) => {
-        const distance = Math.abs(slideProgress - index);
-        const visibility = Math.max(0, 1 - distance * 2.4);
-        const lift = Math.min(44, distance * 30);
-        const scale = 1 - Math.min(distance, 1) * 0.05;
-        slide.style.opacity = visibility.toFixed(3);
-        slide.style.transform = `translateY(${lift}px) scale(${scale.toFixed(3)})`;
-        slide.classList.toggle('is-active', distance < 0.5);
-
-        slide.style.setProperty('--project-swipe', visibility.toFixed(3));
+    controls.forEach((chip) => {
+        chip.classList.toggle('is-active', chip === control);
+        chip.setAttribute('aria-pressed', String(chip === control));
     });
+
+    const playButton = panel.querySelector('.project-play-button');
+    if (playButton) {
+        playButton.setAttribute('aria-label', `Play preview for ${previewTitle.textContent}`);
+    }
 }
 
-function updateScrollStory() {
-    chapters.forEach((chapter) => {
-        updateChapterState(chapter);
-    });
-}
-
-function scheduleScrollStory() {
-    if (scrollFrame !== null) {
+projectPanels.forEach((panel) => {
+    const controls = Array.from(panel.querySelectorAll('[data-preview-control]'));
+    if (!controls.length) {
         return;
     }
 
-    scrollFrame = window.requestAnimationFrame(() => {
-        scrollFrame = null;
-        updateScrollStory();
+    const initialControl = controls.find((control) => control.classList.contains('is-active')) || controls[0];
+    setPreviewState(panel, initialControl);
+
+    controls.forEach((control) => {
+        control.addEventListener('click', () => {
+            setPreviewState(panel, control);
+        });
+    });
+
+    const playButton = panel.querySelector('.project-play-button');
+    if (playButton) {
+        playButton.addEventListener('click', () => {
+            panel.classList.add('is-playing');
+            window.setTimeout(() => {
+                panel.classList.remove('is-playing');
+            }, 280);
+        });
+    }
+});
+
+function applyProjectFilter(filterValue) {
+    projectPanels.forEach((panel) => {
+        const categoryValue = panel.dataset.projectCategory || '';
+        const panelCategories = categoryValue.split(/\s+/).filter(Boolean);
+        const shouldShow = filterValue === 'all' || panelCategories.includes(filterValue);
+
+        panel.classList.toggle('is-filtered-out', !shouldShow);
+    });
+}
+
+if (filterControls.length) {
+    filterControls.forEach((control) => {
+        control.addEventListener('click', () => {
+            const filterValue = control.dataset.filterValue || 'all';
+
+            filterControls.forEach((chip) => {
+                const isActive = chip === control;
+                chip.classList.toggle('is-active', isActive);
+                chip.setAttribute('aria-pressed', String(isActive));
+            });
+
+            applyProjectFilter(filterValue);
+        });
     });
 }
 
@@ -139,8 +172,3 @@ window.addEventListener('keydown', (event) => {
         closeContactModal();
     }
 });
-
-window.addEventListener('scroll', scheduleScrollStory, { passive: true });
-window.addEventListener('resize', scheduleScrollStory);
-window.addEventListener('load', updateScrollStory);
-updateScrollStory();
