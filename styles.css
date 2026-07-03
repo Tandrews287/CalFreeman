@@ -40,7 +40,7 @@
 html,
 body {
     max-width: 100%;
-    overflow-x: clip;
+    overflow-x: hidden;
 }
 
 html {
@@ -553,6 +553,10 @@ body.page-ready .load-overlay {
 }
 
 @media (max-width: 820px) {
+    body {
+        zoom: 1;
+    }
+
     .site-shell {
         width: 100%;
         padding: 16px 5vw 24px;
