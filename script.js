@@ -67,17 +67,24 @@ if (aboutSection) {
     }
 }
 
-// Image swap functionality for work rows
-document.querySelectorAll('.work-image-stack img').forEach((smallImg) => {
-    smallImg.style.cursor = 'pointer';
-    smallImg.addEventListener('click', () => {
-        const row = smallImg.closest('.work-row');
-        const largeImg = row.querySelector('.work-image-large');
-        const largeSrc = largeImg.src;
-        const largeAlt = largeImg.alt;
-        largeImg.src = smallImg.src;
-        largeImg.alt = smallImg.alt;
-        smallImg.src = largeSrc;
-        smallImg.alt = largeAlt;
-    });
-});
+const pressTitle = document.querySelector('.press-title-text');
+
+if (pressTitle) {
+    if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+        const pressObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    pressTitle.classList.add('animate-press');
+                    pressObserver.disconnect();
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -10% 0px',
+        });
+
+        pressObserver.observe(pressTitle);
+    } else {
+        pressTitle.classList.add('animate-press');
+    }
+}

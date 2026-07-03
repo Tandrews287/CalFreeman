@@ -175,6 +175,38 @@ body.page-ready .load-overlay {
     position: relative;
     display: inline-block;
     text-shadow: 4px 4px 0 #ffadd2;
+    opacity: 0;
+}
+
+.press-title-text.animate-press {
+    animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0.8) translateY(40px) rotate(-5deg);
+        opacity: 0;
+        text-shadow: 0px 0px 0 #ffadd2;
+    }
+    50% {
+        transform: scale(1.05) translateY(-10px) rotate(3deg);
+        opacity: 1;
+        text-shadow: 10px 10px 0 #ffadd2;
+    }
+    100% {
+        transform: scale(1) translateY(0) rotate(0deg);
+        opacity: 1;
+        text-shadow: 4px 4px 0 #ffadd2;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .press-title-text {
+        opacity: 1;
+    }
+    .press-title-text.animate-press {
+        animation: none;
+    }
 }
 
 .section-head p {
