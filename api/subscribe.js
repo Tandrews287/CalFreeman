@@ -1,6 +1,4 @@
-const nodemailer = require('nodemailer');
-
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method Not Allowed' });
     }
@@ -11,41 +9,44 @@ module.exports = async function handler(req, res) {
         return res.status(400).json({ error: 'Valid email is required.' });
     }
 
-    // Default to smtp.ionos.co.uk if SMTP_HOST is not provided
-    const SMTP_HOST = process.env.SMTP_HOST || 'smtp.ionos.co.uk';
-    const SMTP_PORT = process.env.SMTP_PORT || 587;
-    const SMTP_EMAIL = process.env.SMTP_EMAIL;
-    const SMTP_PASSWORD = process.env.SMTP_PASSWORD;
+    const API_KEY = process.env.MAILCHIMP_API_KEY;
+    const API_SERVER = process.env.MAILCHIMP_API_SERVER; // e.g. "us6"
+    const AUDIENCE_ID = process.env.MAILCHIMP_AUDIENCE_ID;
 
-    if (!SMTP_EMAIL || !SMTP_PASSWORD) {
-        console.warn('SMTP credentials missing. Simulating success for testing.');
+    if (!API_KEY || !API_SERVER || !AUDIENCE_ID) {
+        console.warn('Mailchimp environment variables missing. Simulating success for testing.');
         return res.status(201).json({ message: 'Simulated success (missing env vars)' });
     }
 
+    const url = `https://${API_SERVER}.api.mailchimp.com/3.0/lists/${AUDIENCE_ID}/members`;
+
+    const data = {
+        email_address: email,
+        status: 'subscribed'
+    };
+
     try {
-        const transporter = nodemailer.createTransport({
-            host: SMTP_HOST,
-            port: parseInt(SMTP_PORT, 10),
-            secure: parseInt(SMTP_PORT, 10) === 465, // true for 465, false for other ports (like 587)
-            auth: {
-                user: SMTP_EMAIL,
-                pass: SMTP_PASSWORD,
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `apikey ${API_KEY}`
             },
+            body: JSON.stringify(data)
         });
 
-        const mailOptions = {
-            from: `"Cal Freeman Website" <${SMTP_EMAIL}>`, 
-            to: SMTP_EMAIL, // Send notification to yourself
-            subject: 'New Mailing List Subscriber!',
-            text: `You have a new mailing list subscriber!\n\nEmail: ${email}\n\nMake sure to add them to your contacts!`,
-            html: `<p>You have a new mailing list subscriber!</p><p><strong>Email:</strong> ${email}</p><p>Make sure to add them to your contacts!</p>`,
-        };
+        if (response.status >= 400) {
+            const errorData = await response.json();
+            // Handle case where user is already subscribed gracefully
+            if (errorData.title === 'Member Exists') {
+                return res.status(200).json({ message: 'Already subscribed!' });
+            }
+            return res.status(400).json({ error: errorData.title || 'Error subscribing' });
+        }
 
-        await transporter.sendMail(mailOptions);
-        
-        return res.status(201).json({ message: 'Subscribed successfully!' });
+        return res.status(201).json({ message: 'Success' });
     } catch (error) {
-        console.error('Error sending email via SMTP:', error.message);
-        return res.status(500).json({ error: 'Failed to send notification email. Please try again later.' });
+        console.error('Error with Mailchimp API:', error.message);
+        return res.status(500).json({ error: 'Internal server error.' });
     }
-};
+}

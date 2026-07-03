@@ -196,7 +196,7 @@ if (emailForm) {
             const data = await response.json();
 
             if (response.ok || response.status === 201) {
-                feedback.textContent = 'Subscribed successfully!';
+                feedback.textContent = data.message === 'Already subscribed!' ? 'Already subscribed!' : 'Subscribed successfully!';
                 feedback.classList.add('success');
                 emailInput.value = '';
                 // Turn arrow to checkmark
