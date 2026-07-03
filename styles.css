@@ -196,11 +196,13 @@ body.page-ready .load-overlay {
         opacity: 0;
         text-shadow: 0px 0px 0 #ffadd2;
     }
+
     50% {
         transform: scale(1.05) translateY(-10px) rotate(3deg);
         opacity: 1;
         text-shadow: 10px 10px 0 #ffadd2;
     }
+
     100% {
         transform: scale(1) translateY(0) rotate(0deg);
         opacity: 1;
@@ -212,6 +214,7 @@ body.page-ready .load-overlay {
     .press-title-text {
         opacity: 1;
     }
+
     .press-title-text.animate-press {
         animation: none;
     }
@@ -322,7 +325,7 @@ body.page-ready .load-overlay {
 }
 
 .about-copy p {
-    font-size: 0.95rem;
+    font-size: 0.99rem;
     line-height: 1.6;
     color: var(--ink);
 }
@@ -344,7 +347,7 @@ body.page-ready .load-overlay {
     transform: scale(1.15);
 }
 
-.about-copy p + p {
+.about-copy p+p {
     margin-top: 24px;
 }
 
@@ -695,6 +698,7 @@ body.page-ready .load-overlay {
         opacity: 0;
         transform: translateY(8px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -705,6 +709,7 @@ body.page-ready .load-overlay {
     from {
         opacity: 1;
     }
+
     to {
         opacity: 0;
     }
@@ -714,6 +719,7 @@ body.page-ready .load-overlay {
     from {
         transform: translateY(0);
     }
+
     to {
         transform: translateY(-100%);
         visibility: hidden;
@@ -810,8 +816,7 @@ body.lightbox-open {
 }
 
 /* Email Signup Form */
-.email-signup-container {
-}
+.email-signup-container {}
 
 .email-signup-container h3 {
     font-size: 1.2rem;
@@ -899,5 +904,7 @@ body.lightbox-open {
 }
 
 @keyframes spin {
-    100% { transform: rotate(360deg); }
+    100% {
+        transform: rotate(360deg);
+    }
 }
