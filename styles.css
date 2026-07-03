@@ -327,8 +327,8 @@ body.page-ready .load-overlay {
 }
 
 .massive-email {
-    display: inline-block;
-    margin-top: 16px;
+    display: block;
+    margin: 32px 0;
     font-size: clamp(2.5rem, 5.5vw, 4rem);
     font-weight: 700;
     color: var(--ink);
@@ -354,6 +354,7 @@ body.page-ready .load-overlay {
     aspect-ratio: 1 / 1;
     overflow: hidden;
     border: 0;
+    transform: translateX(-20%);
 }
 
 .about-image {
@@ -795,7 +796,6 @@ body.lightbox-open {
 
 /* Email Signup Form */
 .email-signup-container {
-    margin-top: 16px;
 }
 
 .email-signup-container h3 {
