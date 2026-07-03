@@ -442,8 +442,8 @@ body.page-ready .load-overlay {
 }
 
 .press-logo {
-    width: 72px;
-    height: 48px;
+    width: 94px;
+    height: 62px;
     object-fit: contain;
     margin: 0 20px;
     z-index: 1;
@@ -613,8 +613,8 @@ body.page-ready .load-overlay {
     }
 
     .press-logo {
-        width: 48px;
-        height: 36px;
+        width: 62px;
+        height: 47px;
         margin: 0 10px;
     }
 
