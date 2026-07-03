@@ -315,7 +315,7 @@ body.page-ready .load-overlay {
 .about-copy h2 {
     font-size: clamp(1rem, 2.1vw, 1.34rem);
     text-transform: uppercase;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.08em;
     margin-bottom: 10px;
     color: var(--ink);
 }
@@ -344,7 +344,7 @@ body.page-ready .load-overlay {
 }
 
 .about-copy p + p {
-    margin-top: 8px;
+    margin-top: 24px;
 }
 
 .about-image-wrap {
