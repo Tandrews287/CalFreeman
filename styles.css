@@ -530,39 +530,57 @@ body.page-ready .load-overlay {
     }
 
     .work-row {
-        gap: 8px;
-        padding: 7px;
+        gap: 12px;
+        padding: 12px;
     }
 
     .work-media-layout {
+        display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 12px;
     }
 
     .work-copy h3 {
-        font-size: 0.9rem;
+        font-size: 1.1rem;
     }
 
     .work-copy p {
-        font-size: 0.59rem;
+        font-size: 0.7rem;
         letter-spacing: 0.1em;
     }
 
     .about-section {
         grid-template-columns: 1fr;
-        padding: 16px;
+        padding: 32px 24px;
+        text-align: center;
     }
 
     .about-image-wrap {
-        margin: 0;
-        width: min(190px, 54vw);
+        margin: 0 auto 20px;
+        width: min(240px, 70vw);
+        order: -1;
+    }
+
+    .massive-email {
+        font-size: clamp(1.4rem, 6vw, 3.2rem);
+        word-break: break-word;
+    }
+
+    .massive-footer-email {
+        font-size: clamp(1.4rem, 7vw, 6rem);
+        word-break: break-word;
     }
 
     .press-list-item {
         padding: 20px 10px;
     }
+
+    .press-item-title {
+        font-size: 1.3rem;
+    }
+
     .press-number {
-        margin-right: 20px;
+        margin-right: 16px;
     }
 
     .site-footer {
@@ -573,56 +591,52 @@ body.page-ready .load-overlay {
 @media (max-width: 520px) {
     .top-bar {
         gap: 10px;
+        align-items: baseline;
     }
 
     .site-name {
-        font-size: clamp(1.3rem, 8vw, 1.7rem);
+        font-size: clamp(1.4rem, 8vw, 1.8rem);
     }
 
     .site-role {
-        font-size: 0.62rem;
-        letter-spacing: 0.13em;
+        font-size: 0.65rem;
     }
 
     .top-nav a {
         font-size: 0.76rem;
     }
 
-    .section-head p {
-        font-size: 0.62rem;
-    }
-
-    .work-list {
-        gap: 8px;
-    }
-
-    .work-row {
-        gap: 7px;
-        padding: 6px;
-    }
-
     .work-media-layout {
-        grid-template-columns: repeat(3, 1fr);
         gap: 8px;
     }
 
-    .work-copy h3 {
-        font-size: 0.78rem;
+    .about-section {
+        padding: 24px 16px;
     }
 
-    .work-copy p {
-        font-size: 0.52rem;
+    .about-copy h2 {
+        margin-bottom: 16px;
     }
 
     .about-copy p {
-        font-size: 0.78rem;
+        font-size: 0.88rem;
     }
 
     .press-list-item {
-        padding: 16px 8px;
+        padding: 16px 4px;
     }
+
+    .press-item-title {
+        font-size: 1.15rem;
+    }
+
     .press-number {
-        margin-right: 14px;
+        margin-right: 12px;
+        font-size: 0.9rem;
+    }
+
+    .press-arrow {
+        font-size: 1.4rem;
     }
 
     .footer-socials {
