@@ -348,13 +348,13 @@ body.page-ready .load-overlay {
 }
 
 .about-image-wrap {
-    width: min(100%, 270px);
-    margin-left: auto;
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto;
     border-radius: 50%;
     aspect-ratio: 1 / 1;
     overflow: hidden;
     border: 0;
-    transform: translateX(-20%);
 }
 
 .about-image {
@@ -423,7 +423,7 @@ body.page-ready .load-overlay {
 }
 
 .press-item-title {
-    font-size: clamp(1.4rem, 3.5vw, 3rem);
+    font-size: clamp(1rem, 2.5vw, 2.1rem);
     font-weight: 600;
     letter-spacing: -0.02em;
     position: relative;
@@ -435,6 +435,14 @@ body.page-ready .load-overlay {
 
 .press-list-item:hover .press-item-title {
     transform: translateX(10px);
+}
+
+.press-logo {
+    width: 60px;
+    height: 40px;
+    object-fit: contain;
+    margin: 0 20px;
+    z-index: 1;
 }
 
 .press-arrow {
@@ -597,7 +605,13 @@ body.page-ready .load-overlay {
     }
 
     .press-item-title {
-        font-size: 1.3rem;
+        font-size: 0.9rem;
+    }
+
+    .press-logo {
+        width: 40px;
+        height: 30px;
+        margin: 0 10px;
     }
 
     .press-number {
@@ -648,7 +662,7 @@ body.page-ready .load-overlay {
     }
 
     .press-item-title {
-        font-size: 1.15rem;
+        font-size: 0.8rem;
     }
 
     .press-number {
