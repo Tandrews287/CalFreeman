@@ -562,13 +562,13 @@ body.page-ready .load-overlay {
     }
 
     .massive-email {
-        font-size: clamp(1.4rem, 6vw, 3.2rem);
-        word-break: break-word;
+        font-size: min(5.5vw, 3.2rem);
+        white-space: nowrap;
     }
 
     .massive-footer-email {
-        font-size: clamp(1.4rem, 7vw, 6rem);
-        word-break: break-word;
+        font-size: min(7vw, 4rem);
+        white-space: nowrap;
     }
 
     .press-list-item {
