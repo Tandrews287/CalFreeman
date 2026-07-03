@@ -52,6 +52,7 @@ body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: var(--ink);
     background: #ffffff;
+    zoom: 0.8;
 }
 
 .load-overlay {
