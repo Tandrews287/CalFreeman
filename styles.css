@@ -815,6 +815,17 @@ body.lightbox-open {
     cursor: pointer;
 }
 
+.footer-section {
+    padding: 20px 0 40px;
+}
+
+.copyright-tag {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 40px;
+}
+
 /* Email Signup Form */
 .email-signup-container {}
 
