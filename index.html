@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cal Freeman | Writer & Director</title>
-    <link rel="stylesheet" href="styles.css?v=20260703e">
+    <link rel="stylesheet" href="styles.css?v=20260703r">
 </head>
 <body class="is-loading">
     <div class="load-overlay" aria-hidden="true">
@@ -13,7 +13,7 @@
 
     <main class="site-shell">
         <header class="top-bar">
-            <div>
+            <div class="site-brand">
                 <h1 class="site-name"><span class="site-name-light">cal</span> <strong>freeman</strong></h1>
                 <p class="site-role">writer &bull; director</p>
             </div>
@@ -23,11 +23,7 @@
             </nav>
         </header>
 
-        <section class="work-section" aria-labelledby="writer-director-title">
-            <div class="section-head">
-                <h2 id="writer-director-title">Writer Director</h2>
-            </div>
-
+        <section class="work-section">
             <div class="work-list">
                 <article class="work-row">
                     <div class="work-media-layout">
@@ -37,7 +33,7 @@
                     </div>
                     <div class="work-copy">
                         <h3>ASL</h3>
-                        <p class="work-subtitle">writer &bull; director under cal freeman</p>
+
                         <p>2024</p>
                     </div>
                 </article>
@@ -45,13 +41,13 @@
                 <article class="work-row">
                     <div class="work-media-layout">
                         <img class="work-image-item" src="assets/SYCN2.jpeg" alt="Something You Cannot Name still 2">
-                        <img class="work-image-item" src="assets/SYCN1.jpeg" alt="Something You Cannot Name still 1">
+                        <img class="work-image-item" src="assets/SYCN1.jpeg?v=2" alt="Something You Cannot Name still 1">
                         <img class="work-image-item" src="assets/SYCN3.jpeg" alt="Something You Cannot Name still 3">
                     </div>
                     <div class="work-copy">
                         <h3>SOMETHING YOU CANNOT NAME</h3>
-                        <p class="work-subtitle">writer &bull; director under cal freeman</p>
-                        <p>2022 | <a href="mailto:hellocalfreeman@gmail.com?subject=Hello%20Cal!" class="watch-link">Request Watch Link</a></p>
+
+                        <p>2022 | <a href="mailto:hq@calfreeman.com?subject=What's%20the%20craic%3F" class="watch-link">Request Watch Link</a></p>
                     </div>
                 </article>
 
@@ -63,7 +59,7 @@
                     </div>
                     <div class="work-copy">
                         <h3>HOLD THE SAUSAGE</h3>
-                        <p class="work-subtitle">writer &bull; director under cal freeman</p>
+
                         <p>2021</p>
                     </div>
                 </article>
@@ -73,11 +69,25 @@
         <section class="about-section" id="about" aria-labelledby="about-title">
             <div class="about-copy">
                 <h2 id="about-title">About</h2>
-                <p>I am an emerging writer-director drawn to queer Irish working-class stories that blend humour and unease while interrogating cultural identity and pride. Fresh off my questionable film degree, I was audibly relieved to have my debut comedy script selected for a BBC X ARTS COUNCIL ENGLAND filmmaking program. HOLD THE SAUSAGE 2021 aired on BBC Four and is available to watch on iPlayer — when you have five minutes — or like now?</p>
-                <p>My SOMETHING YOU CANNOT NAME 2022 gave me the excuse to record myself dancing atop the Navan Fort, a sacral mound leading ‘to other worlds’ in my hometown. Ignoring local ‘lost the plot’ rumours, I was able to blend the results with archived footage as a participant of the BBC 100: MAKING FILM HISTORY PROJECT to visually experiment with themes of dual Irish nationality.</p>
-                <p>My collaborator-and-crowdfunder powered raunchy comedy ASL 2024 graced many festivals including BAFTA-qualifying SQIFF 2025! I am developing my gays and girls driven comedy horror DEAD ON with Irish-led London production company AnyOther - PS it’s fucking class. Since my wit is yet to pay my bills, I freelance as a PA for commercials like SharkNinja, Burger King &amp; Tesco. What can’t I do?</p>
+                <p>Cal is an award-winning film writer-director drawn to stories that use humour in exploring Irish culture, queer identities and pride.</p>
+                <p>His debut comedy HOLD THE SAUSAGE was selected for the BBC X ARTS COUNCIL ENGLAND filmmaking program and is available to watch on iPlayer — when you have five minutes — or like now? SOMETHING YOU CANNOT NAME is an experimental film (with a choreographed cameo) made for BBC 100: MAKING FILM HISTORY PROJECT that explores dual Irish nationality. ASL is a collaborator and crowdfunded raunchy comedy that graced many festivals including BAFTA-qualifying SQIFF 2025!</p>
+                <p>Cal is developing his gays-and-girls driven comedy horror DEAD ON with Irish-led London production company ANYOTHER. Since Cal’s wit is yet to pay his bills, he freelances as a PA for commercials like SharkNinja, Burger King &amp; Tesco. What can’t he do?</p>
                 <br>
-                <a href="mailto:hellocalfreeman@gmail.com?subject=Hello%20Cal!" class="massive-email">hellocalfreeman@gmail.com</a>
+                <a href="mailto:hq@calfreeman.com?subject=What's%20the%20craic%3F" class="massive-email">hq@calfreeman.com</a>
+                
+                <div class="email-signup-container">
+                    <h3>Keep up with Cal</h3>
+                    <form id="email-signup-form" class="email-signup-form">
+                        <div class="input-wrapper">
+                            <input type="email" id="email-input" name="email" placeholder="Email Address" required>
+                            <button type="submit" id="email-submit-btn" aria-label="Subscribe">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </button>
+                        </div>
+                        <p class="consent-text">By entering your email, you consent to receive marketing emails.</p>
+                        <p class="form-feedback" id="form-feedback" aria-live="polite"></p>
+                    </form>
+                </div>
             </div>
             <div class="about-image-wrap">
                 <img src="assets/Portrait.jpeg" alt="Cal Freeman portrait" class="about-image">
@@ -89,32 +99,47 @@
             <div class="press-list">
                 <a class="press-list-item" href="#" target="_blank" rel="noreferrer">
                     <span class="press-number">01</span>
-                    <h3 class="press-item-title">TNC ASL INTERVIEW</h3>
+                    <h3 class="press-item-title">ASL | THE NEW CURRENT</h3>
                     <span class="press-arrow"><svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
                 </a>
                 <a class="press-list-item" href="#" target="_blank" rel="noreferrer">
                     <span class="press-number">02</span>
-                    <h3 class="press-item-title">QUEERLY BELOVED SQIFF</h3>
+                    <h3 class="press-item-title">ASL | QUEERLY BELOVED SQIFF</h3>
                     <span class="press-arrow"><svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
                 </a>
                 <a class="press-list-item" href="#" target="_blank" rel="noreferrer">
                     <span class="press-number">03</span>
-                    <h3 class="press-item-title">MANC UNION</h3>
+                    <h3 class="press-item-title">IRISH DIRECTOR | MANC UNION NEWSPAPER</h3>
                     <span class="press-arrow"><svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
                 </a>
                 <a class="press-list-item" href="#" target="_blank" rel="noreferrer">
                     <span class="press-number">04</span>
-                    <h3 class="press-item-title">HOME ARTIST FILM LIB</h3>
+                    <h3 class="press-item-title">HOME ARTIST FILM LAB</h3>
                     <span class="press-arrow"><svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
                 </a>
                 <a class="press-list-item" href="#" target="_blank" rel="noreferrer">
                     <span class="press-number">05</span>
-                    <h3 class="press-item-title">LIF INTERVIEW</h3>
+                    <h3 class="press-item-title">HTS | LIVERPOOL IRISH FESTIVAL</h3>
                     <span class="press-arrow"><svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
                 </a>
             </div>
         </section>
     </main>
+
+    <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
+        <button class="lightbox-close" aria-label="Close Lightbox">
+            <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+        <button class="lightbox-prev" aria-label="Previous Image">
+            <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="Expanded view">
+        </div>
+        <button class="lightbox-next" aria-label="Next Image">
+            <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+    </div>
 
     <footer class="site-footer">
         <div class="footer-socials" aria-label="Social links">
@@ -125,10 +150,21 @@
                     <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"></circle>
                 </svg>
             </a>
+            <!-- TEMPORARILY HIDDEN
+            <a href="https://www.youtube.com/@calfreeman6604" target="_blank" class="social-link" aria-label="YouTube">
+                <svg viewBox="0 0 28 20" width="28" height="20" aria-hidden="true">
+                    <path d="M26.5 3.2c-.3-1.2-1.2-2.1-2.4-2.4C21.8 0.3 14 0.3 14 0.3s-7.8 0-10.1.5C2.7 1.1 1.8 2 1.5 3.2 1 5.5 1 10 1 10s0 4.5.5 6.8c.3 1.2 1.2 2.1 2.4 2.4 2.3.5 10.1.5 10.1.5s7.8 0 10.1-.5c1.2-.3 2.1-1.2 2.4-2.4.5-2.3.5-6.8.5-6.8s0-4.5-.5-6.8z" fill="currentColor"></path>
+                    <path d="M11.2 5.8v8.4L18.2 10l-7-4.2z" fill="var(--bg)"></path>
+                </svg>
+            </a>
+            <a href="https://www.imdb.com/name/nm12950422/?ref_=ext_shr_lnk" target="_blank" class="social-link" aria-label="IMDb">
+                <img src="assets/IMDB_Logo_2016.svg%20(1).jpg" alt="IMDb">
+            </a>
+            -->
         </div>
-        <a href="mailto:hellocalfreeman@gmail.com?subject=Hello%20Cal!" class="massive-footer-email">hellocalfreeman@gmail.com</a>
+        <a href="mailto:hq@calfreeman.com?subject=What's%20the%20craic%3F" class="massive-footer-email">hq@calfreeman.com</a>
     </footer>
 
-    <script src="script.js?v=20260703e"></script>
+    <script src="script.js?v=20260703s"></script>
 </body>
 </html>

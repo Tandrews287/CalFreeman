@@ -88,3 +88,129 @@ if (pressTitle) {
         pressTitle.classList.add('animate-press');
     }
 }
+
+// Lightbox Logic
+const lightbox = document.getElementById('lightbox');
+if (lightbox) {
+    const lightboxImg = document.getElementById('lightbox-img');
+    const closeBtn = lightbox.querySelector('.lightbox-close');
+    const prevBtn = lightbox.querySelector('.lightbox-prev');
+    const nextBtn = lightbox.querySelector('.lightbox-next');
+    
+    let currentGallery = [];
+    let currentIndex = 0;
+
+    const openLightbox = (index) => {
+        currentIndex = index;
+        lightboxImg.src = currentGallery[currentIndex].src;
+        lightboxImg.alt = currentGallery[currentIndex].alt;
+        lightbox.classList.add('is-open');
+        document.body.classList.add('lightbox-open');
+        
+        prevBtn.style.display = currentGallery.length > 1 ? 'flex' : 'none';
+        nextBtn.style.display = currentGallery.length > 1 ? 'flex' : 'none';
+    };
+
+    const closeLightbox = () => {
+        lightbox.classList.remove('is-open');
+        document.body.classList.remove('lightbox-open');
+        setTimeout(() => {
+            lightboxImg.src = '';
+        }, 300);
+    };
+
+    const nextImage = (e) => {
+        if(e) e.stopPropagation();
+        if (currentGallery.length <= 1) return;
+        currentIndex = (currentIndex + 1) % currentGallery.length;
+        lightboxImg.src = currentGallery[currentIndex].src;
+        lightboxImg.alt = currentGallery[currentIndex].alt;
+    };
+
+    const prevImage = (e) => {
+        if(e) e.stopPropagation();
+        if (currentGallery.length <= 1) return;
+        currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+        lightboxImg.src = currentGallery[currentIndex].src;
+        lightboxImg.alt = currentGallery[currentIndex].alt;
+    };
+
+    document.querySelectorAll('.work-image-item').forEach(img => {
+        img.addEventListener('click', () => {
+            const row = img.closest('.work-row');
+            if (row) {
+                currentGallery = Array.from(row.querySelectorAll('.work-image-item'));
+                const index = currentGallery.indexOf(img);
+                if (index !== -1) {
+                    openLightbox(index);
+                }
+            }
+        });
+    });
+
+    closeBtn.addEventListener('click', closeLightbox);
+    nextBtn.addEventListener('click', nextImage);
+    prevBtn.addEventListener('click', prevImage);
+    
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
+            closeLightbox();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('is-open')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'ArrowLeft') prevImage();
+    });
+}
+
+// Email Signup Form Logic
+const emailForm = document.getElementById('email-signup-form');
+if (emailForm) {
+    const submitBtn = document.getElementById('email-submit-btn');
+    const feedback = document.getElementById('form-feedback');
+    const emailInput = document.getElementById('email-input');
+
+    emailForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const email = emailInput.value.trim();
+        if (!email) return;
+
+        submitBtn.classList.add('is-loading');
+        submitBtn.disabled = true;
+        feedback.textContent = '';
+        feedback.className = 'form-feedback';
+
+        try {
+            const response = await fetch('/api/subscribe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok || response.status === 201) {
+                feedback.textContent = 'Subscribed successfully!';
+                feedback.classList.add('success');
+                emailInput.value = '';
+                // Turn arrow to checkmark
+                submitBtn.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" stroke="#10B981" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+            } else {
+                feedback.textContent = data.message || data.error || 'Something went wrong. Please try again.';
+                feedback.classList.add('error');
+            }
+        } catch (error) {
+            feedback.textContent = 'Network error. Please try again later.';
+            feedback.classList.add('error');
+        } finally {
+            submitBtn.classList.remove('is-loading');
+            submitBtn.disabled = false;
+        }
+    });
+}

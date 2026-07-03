@@ -1,0 +1,8 @@
+{
+  "name": "calfreeman-website",
+  "version": "1.0.0",
+  "description": "Cal Freeman Portfolio",
+  "dependencies": {
+    "nodemailer": "^6.9.13"
+  }
+}
