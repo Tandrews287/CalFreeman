@@ -335,6 +335,8 @@ body.page-ready .load-overlay {
     font-size: 1rem;
     line-height: 1;
     font-weight: 400;
+    position: relative;
+    top: -2px;
     transition: transform 0.3s ease;
 }
 
