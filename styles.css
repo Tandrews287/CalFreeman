@@ -430,7 +430,7 @@ body.page-ready .load-overlay {
 
 .massive-email {
     display: block;
-    margin: 32px 0;
+    margin: 56px 0;
     font-size: clamp(2.5rem, 5.5vw, 4rem);
     font-weight: 700;
     color: var(--ink);
