@@ -127,6 +127,7 @@ body.page-ready .load-overlay {
 
 .site-role {
     margin-top: 0;
+    margin-left: 4px; /* Optical alignment with the 'c' above */
     font-size: 0.78rem;
     letter-spacing: 0.16em;
     text-transform: lowercase;
@@ -175,7 +176,7 @@ body.page-ready .load-overlay {
 }
 
 .press-title-text {
-    font-size: clamp(4rem, 12vw, 10rem) !important;
+    font-size: clamp(3.8rem, 11.5vw, 9.6rem) !important;
     font-weight: 700;
     color: var(--ink) !important;
     letter-spacing: -0.04em !important;
@@ -284,6 +285,15 @@ body.page-ready .load-overlay {
     transform-origin: left center;
 }
 
+.project-link,
+.project-link:visited,
+.project-link:hover,
+.project-link:active {
+    text-decoration: none !important;
+    color: inherit !important;
+    display: inline-block;
+}
+
 .work-copy h3:hover {
     transform: scale(1.15);
 }
@@ -292,6 +302,94 @@ body.page-ready .load-overlay {
     font-size: 0.66rem;
     text-transform: uppercase;
     letter-spacing: 0.13em;
+    color: var(--muted);
+    margin-top: 2px;
+}
+
+/* Screenings Accordion */
+.screenings-accordion {
+    margin-top: 2px;
+}
+
+.screenings-toggle {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 4px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: inherit;
+    transition: color 0.2s;
+}
+
+.screenings-toggle:hover {
+    color: var(--ink);
+}
+
+.screenings-toggle .toggle-icon {
+    font-size: 1rem;
+    line-height: 1;
+    font-weight: 400;
+    transition: transform 0.3s ease;
+}
+
+.screenings-toggle[aria-expanded="true"] .toggle-icon {
+    transform: rotate(45deg);
+}
+
+.screenings-content {
+    margin-top: 12px;
+    padding-left: 2px;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: var(--ink);
+    opacity: 0;
+    transform: translateY(-5px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.screenings-content:not([hidden]) {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.screenings-year {
+    margin-bottom: 16px;
+}
+
+.screenings-year:last-child {
+    margin-bottom: 0;
+}
+
+.screenings-year h4 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--ink);
+}
+
+.screenings-year ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.screenings-year li {
+    margin-bottom: 4px;
+    position: relative;
+    padding-left: 12px;
+    color: var(--muted);
+}
+
+.screenings-year li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
     color: var(--muted);
 }
 
@@ -444,7 +542,8 @@ body.page-ready .load-overlay {
 .press-logo {
     width: 60px;
     height: 40px;
-    object-fit: contain;
+    object-fit: cover;
+    border-radius: 4px;
     margin: 0 20px;
     z-index: 1;
 }
@@ -468,7 +567,7 @@ body.page-ready .load-overlay {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 40px;
+    gap: 60px;
 }
 
 .massive-footer-email {
@@ -542,7 +641,6 @@ body.page-ready .load-overlay {
 
 .site-footer p {
     font-size: 0.73rem;
-    text-transform: uppercase;
     letter-spacing: 0.16em;
     color: var(--muted);
 }
@@ -620,6 +718,7 @@ body.page-ready .load-overlay {
         width: 40px;
         height: 30px;
         margin: 0 10px;
+        object-fit: cover;
     }
 
     .press-number {
@@ -827,11 +926,131 @@ body.lightbox-open {
     text-align: center;
     font-size: 0.8rem;
     color: var(--muted);
-    margin-top: 40px;
+    margin-top: 0;
+    text-transform: lowercase;
 }
 
 /* Email Signup Form */
 .email-signup-container {}
+
+/* Private Viewing Modal */
+.pv-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(16, 16, 16, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.pv-modal.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.pv-modal-content {
+    background: var(--paper);
+    color: var(--ink);
+    padding: 40px;
+    border-radius: 18px;
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.pv-modal.active .pv-modal-content {
+    transform: translateY(0);
+}
+
+.pv-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--muted);
+}
+
+.pv-title {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.pv-subtitle {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 24px;
+}
+
+.pv-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.pv-form input[type="email"] {
+    padding: 12px 16px;
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+}
+
+.pv-form input[type="email"]:focus {
+    border-color: var(--ink);
+}
+
+.pv-marketing-label {
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.pv-submit-btn {
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.pv-submit-btn:hover {
+    background: #333;
+}
+
+.pv-message {
+    margin-top: 16px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.pv-message.error {
+    color: #d93025;
+}
+
+.pv-message.success {
+    color: #188038;
+}
+
+.pv-trigger {
+    cursor: pointer;
+}
 
 .email-signup-container h3 {
     font-size: 1.2rem;

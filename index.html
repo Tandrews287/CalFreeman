@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cal Freeman | Writer & Director</title>
-    <link rel="stylesheet" href="styles.css?v=2026070322">
+    <title>cal freeman | writer • director</title>
+    <link rel="stylesheet" href="styles.css?v=2026070331">
 </head>
 <body class="is-loading">
     <div class="load-overlay" aria-hidden="true">
@@ -32,7 +32,9 @@
                         <img class="work-image-item" src="assets/ASL3.jpeg" alt="ASL still 3">
                     </div>
                     <div class="work-copy">
-                        <h3>ASL</h3>
+                        <a href="https://www.youtube.com/watch?v=wwfsW_F0jBY&feature=youtu.be" target="_blank" class="project-link">
+                            <h3>ASL</h3>
+                        </a>
 
                         <p>2024</p>
                     </div>
@@ -45,9 +47,9 @@
                         <img class="work-image-item" src="assets/SYCN3.jpeg" alt="Something You Cannot Name still 3">
                     </div>
                     <div class="work-copy">
-                        <h3>SOMETHING YOU CANNOT NAME</h3>
+                        <h3><span class="pv-trigger" role="button" tabindex="0">SOMETHING YOU CANNOT NAME</span></h3>
 
-                        <p>2022 | <a href="mailto:hq@calfreeman.com?subject=What's%20the%20craic%3F" class="watch-link">Request Watch Link</a></p>
+                        <p>2022</p>
                     </div>
                 </article>
 
@@ -58,7 +60,41 @@
                         <img class="work-image-item" src="assets/HTS1.jpeg" alt="Hold The Sausage still 1">
                     </div>
                     <div class="work-copy">
-                        <h3>HOLD THE SAUSAGE</h3>
+                        <a href="https://www.bbc.co.uk/programmes/p0b0mvps" target="_blank" class="project-link">
+                            <h3>HOLD THE SAUSAGE</h3>
+                        </a>
+
+                        <div class="screenings-accordion">
+                            <button class="screenings-toggle" aria-expanded="false">
+                                Screenings <span class="toggle-icon">+</span>
+                            </button>
+                            <div class="screenings-content" hidden>
+                                <div class="screenings-year">
+                                    <h4>2022</h4>
+                                    <ul>
+                                        <li>The City Eye Southampton</li>
+                                        <li>The Voices Film Programme London</li>
+                                        <li>Colony Shorts Pride Manchester</li>
+                                        <li>Superbia Queer Screening Pride Manchester</li>
+                                        <li>BBC Upload Festival Manchester</li>
+                                        <li>Filmed Up HOME Manchester</li>
+                                        <li>Manchester Lift-Off Film Festival</li>
+                                        <li>London Irish Film Festival</li>
+                                        <li>Indie Short Fest LA (USA) Best Comedy Short & Best Actress Winners</li>
+                                    </ul>
+                                </div>
+                                <div class="screenings-year">
+                                    <h4>2021</h4>
+                                    <ul>
+                                        <li>Prodigy Film Festival Best TV Episode & Best Actor Winners</li>
+                                        <li>London Irish Film Festival Oct</li>
+                                        <li>Liverpool Irish Festival Screening, Newspaper Cover & Article</li>
+                                        <li>REPRESENT ME Manchester</li>
+                                        <li>Film Feels Hopeful</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
 
                         <p>2021</p>
                     </div>
@@ -69,7 +105,7 @@
         <section class="about-section" id="about" aria-labelledby="about-title">
             <div class="about-copy">
                 <h2 id="about-title">About</h2>
-                <p>Cal is an award-winning film writer director drawn to stories that use humour in exploring Irish culture, queer identities and pride.</p>
+                <p>Cal is an award-winning film writer director drawn to humourous stories that explore Irish culture, queer identities and pride.</p>
                 <p>His debut comedy HOLD THE SAUSAGE was selected for a <strong>BBC X ARTS COUNCIL ENGLAND</strong> filmmaking program and is available to watch on iPlayer when you get a minute — or like now? SOMETHING YOU CANNOT NAME is a <strong>BBC 100: MAKING FILM HISTORY</strong> experimental archival film exploring dual Irish nationality. ASL is a crowdfunded raunchy comedy that tickled many festivals including <strong>BAFTA QUALIFYING SQIFF</strong> 2025!</p>
                 <p>Cal is developing his gays-and-girls driven comedy horror DEAD ON with Irish-led London production company AnyOther. Since Cal’s wit doesn’t yet pay his bills, he freelances as a PA for commercials like SharkNinja, Burger King &amp; Tesco. What can’t he do?</p>
                 <a href="mailto:hq@calfreeman.com?subject=What's%20the%20craic%3F" class="massive-email">hq@calfreeman.com</a>
@@ -123,7 +159,7 @@
                 <a class="press-list-item" href="https://www.liverpoolirishfestival.com/its-not-grim-up-north/" target="_blank" rel="noreferrer">
                     <span class="press-number">05</span>
                     <h3 class="press-item-title">HTS | LIVERPOOL IRISH FESTIVAL 2021</h3>
-                    <div class="press-logo"></div>
+                    <img src="assets/PRESS5.png" alt="Press Logo" class="press-logo">
                     <span class="press-arrow"><svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
                 </a>
             </div>
@@ -143,6 +179,27 @@
         <button class="lightbox-next" aria-label="Next Image">
             <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </button>
+    </div>
+
+    <!-- Private Viewing Modal -->
+    <div id="pv-modal" class="pv-modal" aria-hidden="true">
+        <div class="pv-modal-content">
+            <button id="pv-close" class="pv-close-btn" aria-label="Close modal">&times;</button>
+            <h3 class="pv-title">Request Private Link</h3>
+            <p class="pv-subtitle"><i>This is a private viewing only available upon request.</i></p>
+            
+            <form id="pv-form" class="pv-form">
+                <input type="email" id="pv-email" placeholder="Enter your email address" required>
+                
+                <label class="pv-marketing-label">
+                    <input type="checkbox" id="pv-marketing" checked>
+                    Keep up with Cal (Marketing emails)
+                </label>
+                
+                <button type="submit" id="pv-submit" class="pv-submit-btn">Request Link</button>
+            </form>
+            <p id="pv-message" class="pv-message"></p>
+        </div>
     </div>
 
     <footer class="site-footer">
@@ -166,9 +223,9 @@
             </a>
             -->
         </div>
-        <p class="copyright-tag">&copy; 2026 Cal Freeman. All rights reserved.</p>
+        <p class="copyright-tag">&copy; 2026 cal freeman. all rights reserved.</p>
     </footer>
 
-    <script src="script.js?v=2026070322"></script>
+    <script src="script.js?v=2026070331"></script>
 </body>
 </html>

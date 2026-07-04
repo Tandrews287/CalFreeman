@@ -1,0 +1,25 @@
+{
+  "name": "calfreeman",
+  "version": "1.0.0",
+  "description": "A clean, minimalist portfolio website for film writer and director Cal Freeman. Built with HTML, CSS, and JavaScript with a focus on simplicity and subtle animations.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tandrews287/CalFreeman.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Tandrews287/CalFreeman/issues"
+  },
+  "homepage": "https://github.com/Tandrews287/CalFreeman#readme",
+  "dependencies": {
+    "jsonwebtoken": "^9.0.3",
+    "nodemailer": "^9.0.3"
+  }
+}

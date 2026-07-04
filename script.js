@@ -214,3 +214,124 @@ if (emailForm) {
         }
     });
 }
+
+// Private Viewing Modal Logic
+const pvModal = document.getElementById('pv-modal');
+const pvTrigger = document.querySelector('.pv-trigger');
+const pvClose = document.getElementById('pv-close');
+const pvForm = document.getElementById('pv-form');
+const pvEmail = document.getElementById('pv-email');
+const pvMarketing = document.getElementById('pv-marketing');
+const pvMessage = document.getElementById('pv-message');
+const pvSubmit = document.getElementById('pv-submit');
+
+if (pvModal && pvTrigger) {
+    // Open modal
+    const openModal = () => {
+        pvModal.classList.add('active');
+        pvModal.setAttribute('aria-hidden', 'false');
+        pvEmail.focus();
+    };
+
+    pvTrigger.addEventListener('click', openModal);
+    pvTrigger.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openModal();
+        }
+    });
+
+    // Close modal
+    const closeModal = () => {
+        pvModal.classList.remove('active');
+        pvModal.setAttribute('aria-hidden', 'true');
+        pvMessage.textContent = '';
+        pvMessage.className = 'pv-message';
+    };
+
+    pvClose.addEventListener('click', closeModal);
+    pvModal.addEventListener('click', (e) => {
+        if (e.target === pvModal) {
+            closeModal();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && pvModal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    // Handle submission
+    pvForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const email = pvEmail.value.trim();
+        if (!email) return;
+
+        const marketingOptIn = pvMarketing.checked;
+        
+        pvSubmit.textContent = 'Requesting...';
+        pvSubmit.disabled = true;
+        pvMessage.textContent = '';
+        pvMessage.className = 'pv-message';
+        
+        try {
+            const response = await fetch('/api/request-viewing', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    email, 
+                    marketingOptIn,
+                    title: "SOMETHING YOU CANNOT NAME"
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+                pvMessage.textContent = "Request sent! Please check your email.";
+                pvMessage.className = 'pv-message success';
+                pvForm.reset();
+                setTimeout(closeModal, 3000);
+            } else {
+                pvMessage.textContent = data.error || 'Something went wrong. Please try again.';
+                pvMessage.className = 'pv-message error';
+            }
+        } catch (err) {
+            pvMessage.textContent = 'Network error. Please try again later.';
+            pvMessage.className = 'pv-message error';
+        } finally {
+            pvSubmit.textContent = 'Request Link';
+            pvSubmit.disabled = false;
+        }
+    });
+}
+
+// Screenings Accordion Logic
+const screeningsToggle = document.querySelector('.screenings-toggle');
+const screeningsContent = document.querySelector('.screenings-content');
+
+if (screeningsToggle && screeningsContent) {
+    screeningsToggle.addEventListener('click', () => {
+        const isExpanded = screeningsToggle.getAttribute('aria-expanded') === 'true';
+        
+        if (isExpanded) {
+            screeningsContent.style.opacity = '0';
+            screeningsContent.style.transform = 'translateY(-5px)';
+            
+            setTimeout(() => {
+                screeningsContent.hidden = true;
+                screeningsToggle.setAttribute('aria-expanded', 'false');
+            }, 300);
+        } else {
+            screeningsContent.hidden = false;
+            // Force reflow
+            screeningsContent.offsetHeight;
+            
+            screeningsContent.style.opacity = '1';
+            screeningsContent.style.transform = 'translateY(0)';
+            screeningsToggle.setAttribute('aria-expanded', 'true');
+        }
+    });
+}
