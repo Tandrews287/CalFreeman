@@ -306,6 +306,16 @@ body.page-ready .load-overlay {
     margin-top: 2px;
 }
 
+.work-copy .work-bio {
+    font-size: 0.78rem;
+    text-transform: none;
+    letter-spacing: 0;
+    line-height: 1.5;
+    color: var(--muted);
+    margin-top: 4px;
+    white-space: nowrap;
+}
+
 /* Screenings Accordion */
 .screenings-accordion {
     margin-top: 2px;
