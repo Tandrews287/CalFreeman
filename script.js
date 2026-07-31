@@ -309,29 +309,79 @@ if (pvModal && pvTrigger) {
 }
 
 // Screenings Accordion Logic
-const screeningsToggle = document.querySelector('.screenings-toggle');
-const screeningsContent = document.querySelector('.screenings-content');
+const screeningsToggles = document.querySelectorAll('.screenings-toggle');
 
-if (screeningsToggle && screeningsContent) {
-    screeningsToggle.addEventListener('click', () => {
-        const isExpanded = screeningsToggle.getAttribute('aria-expanded') === 'true';
-        
-        if (isExpanded) {
-            screeningsContent.style.opacity = '0';
-            screeningsContent.style.transform = 'translateY(-5px)';
+if (screeningsToggles.length > 0) {
+    screeningsToggles.forEach(toggle => {
+        toggle.addEventListener('click', () => {
+            // Find the closest .screenings-accordion container and then the content inside it
+            const accordionContainer = toggle.closest('.screenings-accordion');
+            const content = accordionContainer.querySelector('.screenings-content');
             
-            setTimeout(() => {
-                screeningsContent.hidden = true;
-                screeningsToggle.setAttribute('aria-expanded', 'false');
-            }, 300);
-        } else {
-            screeningsContent.hidden = false;
-            // Force reflow
-            screeningsContent.offsetHeight;
+            if (!content) return;
             
-            screeningsContent.style.opacity = '1';
-            screeningsContent.style.transform = 'translateY(0)';
-            screeningsToggle.setAttribute('aria-expanded', 'true');
-        }
+            const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+            
+            if (isExpanded) {
+                content.style.opacity = '0';
+                content.style.transform = 'translateY(-5px)';
+                
+                setTimeout(() => {
+                    content.hidden = true;
+                    toggle.setAttribute('aria-expanded', 'false');
+                }, 300);
+            } else {
+                content.hidden = false;
+                // Force reflow
+                content.offsetHeight;
+                
+                content.style.opacity = '1';
+                content.style.transform = 'translateY(0)';
+                toggle.setAttribute('aria-expanded', 'true');
+            }
+        });
     });
 }
+
+// Inline Video Player Logic
+const videoLinks = document.querySelectorAll('.project-link[data-video-url]');
+videoLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        const videoUrl = link.getAttribute('data-video-url');
+        if (!videoUrl) return;
+        
+        e.preventDefault();
+        
+        // Find the corresponding media layout container
+        const workRow = link.closest('.work-row');
+        const mediaLayout = workRow.querySelector('.work-media-layout');
+        
+        if (mediaLayout && !mediaLayout.dataset.hasVideo) {
+            // Save original HTML to restore later
+            const originalHTML = mediaLayout.innerHTML;
+            mediaLayout.dataset.hasVideo = 'true';
+            
+            mediaLayout.innerHTML = `
+                <div class="video-player-wrapper">
+                    <button class="video-minimize-btn" aria-label="Minimize video">
+                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                        Minimize
+                    </button>
+                    <div class="video-iframe-container">
+                        <iframe src="${videoUrl}" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            `;
+            mediaLayout.style.display = 'block'; // Ensure it's not a grid anymore so the iframe takes full space
+
+            // Add minimize listener
+            const minimizeBtn = mediaLayout.querySelector('.video-minimize-btn');
+            minimizeBtn.addEventListener('click', (ev) => {
+                ev.stopPropagation();
+                mediaLayout.innerHTML = originalHTML;
+                mediaLayout.style.display = ''; // Restore original display
+                delete mediaLayout.dataset.hasVideo;
+            });
+        }
+    });
+});
