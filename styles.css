@@ -29,6 +29,7 @@
     --line: rgba(19, 19, 19, 0.14);
     --line-strong: rgba(19, 19, 19, 0.28);
     --about-bg: #0f0f10;
+    --link: #1557d6;
 }
 
 * {
@@ -146,11 +147,9 @@ body.page-ready .load-overlay {
 }
 
 .top-nav a {
-    color: var(--ink);
-    text-decoration: none;
-    text-transform: lowercase;
-    font-size: 0.92rem;
-    letter-spacing: 0.08em;
+    color: var(--link);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
     border-bottom: 1px solid transparent;
     transition: border-color 0.16s ease, opacity 0.16s ease;
 }
@@ -323,6 +322,49 @@ body.page-ready .load-overlay {
     padding: 4px 2px 2px;
 }
 
+.project-title-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 10px;
+    row-gap: 4px;
+    max-width: 100%;
+}
+
+.project-link,
+.project-link:visited,
+.project-link:hover,
+.project-link:active,
+.project-link * {
+    color: var(--link) !important;
+    text-decoration: underline !important;
+    text-underline-offset: 0.12em;
+}
+
+.project-link h3,
+.project-link:visited h3,
+.project-link:hover h3,
+.project-link:active h3,
+.project-link h3 strong,
+.project-link h3 span {
+    color: var(--link) !important;
+}
+
+.work-copy h3 {
+    color: var(--link) !important;
+}
+
+.project-link {
+    color: var(--link) !important;
+    text-decoration: underline !important;
+    display: inline-block;
+    max-width: 100%;
+}
+
+.project-link h3 {
+    color: var(--link) !important;
+}
+
 .work-copy h3 {
     font-size: clamp(0.92rem, 1.5vw, 1.08rem);
     letter-spacing: -0.02em;
@@ -331,19 +373,37 @@ body.page-ready .load-overlay {
     cursor: pointer;
     width: fit-content;
     transform-origin: left center;
-}
-
-.project-link,
-.project-link:visited,
-.project-link:hover,
-.project-link:active {
-    text-decoration: none !important;
-    color: inherit !important;
-    display: inline-block;
+    color: var(--link);
 }
 
 .work-copy h3:hover {
-    transform: scale(1.15);
+    transform: none;
+}
+
+.project-link:hover h3,
+.project-link:focus-visible h3 {
+    transform: none;
+}
+
+.project-tag,
+.project-subtitle {
+    color: var(--link);
+    font-weight: 600;
+}
+
+.project-subtitle-link {
+    margin-top: -2px;
+}
+
+.project-tag,
+.project-subtitle {
+    color: var(--link);
+    font-weight: 600;
+}
+
+.project-subtitle {
+    font-size: clamp(0.8rem, 1.2vw, 0.94rem);
+    letter-spacing: -0.01em;
 }
 
 .work-copy p {
@@ -485,6 +545,23 @@ body.page-ready .load-overlay {
     font-size: 0.99rem;
     line-height: 1.6;
     color: var(--ink);
+}
+
+.text-link,
+.text-link:visited,
+.text-link:hover,
+.text-link:active {
+    color: var(--link);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.text-link strong {
+    font-weight: 700;
+}
+
+.text-link:hover {
+    text-decoration: underline;
 }
 
 .massive-email {
