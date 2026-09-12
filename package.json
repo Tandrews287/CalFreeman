@@ -4,6 +4,7 @@
   "description": "A clean, minimalist portfolio website for film writer and director Cal Freeman. Built with HTML, CSS, and JavaScript with a focus on simplicity and subtle animations.",
   "main": "script.js",
   "scripts": {
+    "dev": "node --env-file=.env.local dev-server.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -13,7 +14,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/Tandrews287/CalFreeman/issues"
   },

@@ -24,29 +24,29 @@ export default async function handler(req, res) {
         return res.status(500).json({ error: 'Server configuration error.' });
     }
 
-    // 1. Handle Mailchimp Marketing Opt-In (if true)
+    // 1. Handle Brevo Marketing Opt-In (if true)
     if (marketingOptIn) {
-        const MC_KEY = process.env.MAILCHIMP_API_KEY;
-        const MC_SERVER = process.env.MAILCHIMP_API_SERVER;
-        const MC_AUDIENCE = process.env.MAILCHIMP_AUDIENCE_ID;
+        const BREVO_KEY = process.env.BREVO_API_KEY;
+        const BREVO_LIST_ID = process.env.BREVO_LIST_ID ? parseInt(process.env.BREVO_LIST_ID, 10) : 2;
 
-        if (MC_KEY && MC_SERVER && MC_AUDIENCE) {
+        if (BREVO_KEY) {
             try {
-                const mcUrl = `https://${MC_SERVER}.api.mailchimp.com/3.0/lists/${MC_AUDIENCE}/members`;
-                await fetch(mcUrl, {
+                await fetch('https://api.brevo.com/v3/contacts', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        Authorization: `apikey ${MC_KEY}`
+                        'Accept': 'application/json',
+                        'api-key': BREVO_KEY
                     },
                     body: JSON.stringify({
-                        email_address: email,
-                        status: 'subscribed'
+                        email: email,
+                        listIds: [BREVO_LIST_ID],
+                        updateEnabled: true
                     })
                 });
-                console.log(`User ${email} added to Mailchimp for marketing.`);
+                console.log(`User ${email} added to Brevo for marketing.`);
             } catch (err) {
-                console.error('Mailchimp marketing opt-in failed:', err);
+                console.error('Brevo marketing opt-in failed:', err);
                 // Non-fatal, continue with email process
             }
         }
