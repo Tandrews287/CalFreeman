@@ -794,7 +794,7 @@ body.page-ready .load-overlay {
 
     .site-shell {
         width: 100%;
-        padding: 16px 5vw 24px;
+        padding: 16px 5vw 16px;
         overflow-x: hidden;
     }
 
@@ -880,7 +880,9 @@ body.page-ready .load-overlay {
     }
 
     .site-footer {
-        padding-bottom: 20px;
+        margin-top: 24px;
+        padding: 28px 20px 20px;
+        gap: 28px;
     }
 }
 
@@ -959,6 +961,16 @@ body.page-ready .load-overlay {
         width: 36px;
         height: 36px;
         border-radius: 9px;
+    }
+
+    .site-shell {
+        padding-bottom: 8px;
+    }
+
+    .site-footer {
+        margin-top: 12px;
+        padding: 16px 20px 20px;
+        gap: 20px;
     }
 
     .site-footer p {
