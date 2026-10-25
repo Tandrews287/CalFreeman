@@ -1,4 +1,3 @@
-import nodemailer from 'nodemailer';
 import jwt from 'jsonwebtoken';
 
 export default async function handler(req, res) {
@@ -13,13 +12,12 @@ export default async function handler(req, res) {
     }
 
     const JWT_SECRET = process.env.JWT_SECRET;
-    const SMTP_HOST = process.env.SMTP_HOST;
-    const SMTP_PORT = process.env.SMTP_PORT || 465;
-    const SMTP_USER = process.env.SMTP_USER;
-    const SMTP_PASS = process.env.SMTP_PASS;
+    const BREVO_API_KEY = process.env.BREVO_API_KEY;
+    const SENDER_EMAIL = process.env.SENDER_EMAIL || 'hello@calfreeman.com';
+    const CAL_ALERT_EMAIL = process.env.CAL_ALERT_EMAIL || 'hello@calfreeman.com';
     const HOST_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : (req.headers.host.includes('localhost') ? `http://${req.headers.host}` : `https://${req.headers.host}`);
 
-    if (!JWT_SECRET || !SMTP_HOST || !SMTP_USER || !SMTP_PASS) {
+    if (!JWT_SECRET || !BREVO_API_KEY) {
         console.error('Missing environment variables for email or JWT setup.');
         return res.status(500).json({ error: 'Server configuration error.' });
     }
@@ -52,43 +50,55 @@ export default async function handler(req, res) {
         }
     }
 
-    // 2. Setup Nodemailer Transporter
-    const transporter = nodemailer.createTransport({
-        host: SMTP_HOST,
-        port: SMTP_PORT,
-        secure: SMTP_PORT == 465, // true for 465, false for other ports
-        auth: {
-            user: SMTP_USER,
-            pass: SMTP_PASS,
-        },
-    });
-
     try {
-        // 3. Send automated reply to the user
-        await transporter.sendMail({
-            from: `"Cal Freeman" <${SMTP_USER}>`,
-            to: email,
-            subject: `Request to view: ${title}`,
-            text: `Hi it's Cal here.\n\nI saw you wanted to view ${title}. Please bear with me while I get that sorted and I'll send you the link shortly!\n\nBest,\nCal`,
-            html: `<p>Hi it's Cal here,</p><p>I saw you wanted to view <strong>${title}</strong>. Please bear with me while I get that sorted and I'll send you the link shortly!</p><p>Best,<br>Cal</p>`
-        });
-
-        // 4. Generate JWT token for Cal to approve/deny
+        // Generate approval links before sending the notification email.
         const token = jwt.sign(
             { email: email, title: title },
-            JWT_SECRET,
-            { expiresIn: '7d' } // Links valid for 7 days
+            JWT_SECRET, { expiresIn: '7d' }
         );
 
         const approveUrl = `${HOST_URL}/api/resolve-request?token=${token}&action=approve`;
         const denyUrl = `${HOST_URL}/api/resolve-request?token=${token}&action=deny`;
 
-        // 5. Send approval email to Cal
-        await transporter.sendMail({
-            from: `"Automated System" <${SMTP_USER}>`,
-            to: SMTP_USER, // Send to Cal himself
-            subject: `[ACTION REQUIRED] Link request for ${title}`,
-            html: `
+        const emailResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'api-key': BREVO_API_KEY
+            },
+            body: JSON.stringify({
+                sender: { name: 'Cal Freeman', email: SENDER_EMAIL },
+                to: [{ email, name: 'Private viewing requester' }],
+                subject: `Request to view: ${title}`,
+                textContent: `Hi it's Cal here.\n\nI saw you wanted to view ${title}. Please bear with me while I get that sorted and I'll send you the link shortly!\n\nBest,\nCal`,
+                htmlContent: `<p>Hi it's Cal here,</p><p>I saw you wanted to view <strong>${title}</strong>. Please bear with me while I get that sorted and I'll send you the link shortly!</p><p>Best,<br>Cal</p>`
+            })
+        });
+
+        if (!emailResponse.ok) {
+            const errorData = await emailResponse.json().catch(() => ({}));
+            console.error('Brevo requester email failed:', errorData);
+            if (errorData.code === 'unauthorized') {
+                return res.status(502).json({
+                    error: 'Email provider rejected this server. Add its IP address to Brevo authorised IPs, or use an API key without IP restrictions.'
+                });
+            }
+            return res.status(502).json({ error: 'Failed to send request email.' });
+        }
+
+        const alertResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'api-key': BREVO_API_KEY
+            },
+            body: JSON.stringify({
+                sender: { name: 'Automated System', email: SENDER_EMAIL },
+                to: [{ email: CAL_ALERT_EMAIL, name: 'Cal Freeman' }],
+                subject: `[ACTION REQUIRED] Link request for ${title}`,
+                htmlContent: `
                 <p>A user (<strong>${email}</strong>) has requested a link to watch <strong>${title}</strong>.</p>
                 <p>Would you like to send it?</p>
                 <br/>
@@ -98,7 +108,19 @@ export default async function handler(req, res) {
                 <br/><br/>
                 <p><small>These links are valid for 7 days.</small></p>
             `
+            })
         });
+
+        if (!alertResponse.ok) {
+            const errorData = await alertResponse.json().catch(() => ({}));
+            console.error('Brevo alert email failed:', errorData);
+            if (errorData.code === 'unauthorized') {
+                return res.status(502).json({
+                    error: 'Email provider rejected this server. Add its IP address to Brevo authorised IPs, or use an API key without IP restrictions.'
+                });
+            }
+            return res.status(502).json({ error: 'Failed to send request notification.' });
+        }
 
         return res.status(200).json({ message: 'Success' });
     } catch (error) {

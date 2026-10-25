@@ -1,4 +1,3 @@
-import nodemailer from 'nodemailer';
 import jwt from 'jsonwebtoken';
 
 export default async function handler(req, res) {
@@ -13,13 +12,11 @@ export default async function handler(req, res) {
     }
 
     const JWT_SECRET = process.env.JWT_SECRET;
-    const SMTP_HOST = process.env.SMTP_HOST;
-    const SMTP_PORT = process.env.SMTP_PORT || 465;
-    const SMTP_USER = process.env.SMTP_USER;
-    const SMTP_PASS = process.env.SMTP_PASS;
+    const BREVO_API_KEY = process.env.BREVO_API_KEY;
+    const SENDER_EMAIL = process.env.SENDER_EMAIL || 'hello@calfreeman.com';
     const SYCN_LINK = process.env.SYCN_LINK || '#';
 
-    if (!JWT_SECRET || !SMTP_HOST || !SMTP_USER || !SMTP_PASS) {
+    if (!JWT_SECRET || !BREVO_API_KEY) {
         return res.status(500).send('Server configuration error.');
     }
 
@@ -31,60 +28,69 @@ export default async function handler(req, res) {
     }
 
     const { email, title } = payload;
+    let emailPayload;
+    let successResponse;
 
-    const transporter = nodemailer.createTransport({
-        host: SMTP_HOST,
-        port: SMTP_PORT,
-        secure: SMTP_PORT == 465,
-        auth: {
-            user: SMTP_USER,
-            pass: SMTP_PASS,
-        },
-    });
+    if (action === 'approve') {
+        emailPayload = {
+            subject: `Your link for: ${title}`,
+            htmlContent: `
+                <p>Hi,</p>
+                <p>Thanks for your interest! Here is the private viewing link for <strong>${title}</strong>:</p>
+                <p><a href="${SYCN_LINK}">${SYCN_LINK}</a></p>
+                <p>Please do not share this link publicly.</p>
+                <p>Best,<br>Cal</p>
+            `
+        };
+        successResponse = `
+            <h1 style="color: #188038;">Request Approved!</h1>
+            <p>The private link has been sent to <strong>${email}</strong>.</p>
+        `;
+    } else if (action === 'deny') {
+        emailPayload = {
+            subject: `Update regarding: ${title}`,
+            htmlContent: `
+                <p>Hi,</p>
+                <p>Sorry, but we cannot provide the link to <strong>${title}</strong> at the minute.</p>
+                <p>We appreciate your patience regardless.</p>
+                <p>Best,<br>Cal</p>
+            `
+        };
+        successResponse = `
+            <h1 style="color: #d93025;">Request Denied</h1>
+            <p>A polite rejection email has been sent to <strong>${email}</strong>.</p>
+        `;
+    } else {
+        return res.status(400).send('Invalid action.');
+    }
 
     try {
-        if (action === 'approve') {
-            await transporter.sendMail({
-                from: `"Cal Freeman" <${SMTP_USER}>`,
-                to: email,
-                subject: `Your link for: ${title}`,
-                html: `
-                    <p>Hi,</p>
-                    <p>Thanks for your interest! Here is the private viewing link for <strong>${title}</strong>:</p>
-                    <p><a href="${SYCN_LINK}">${SYCN_LINK}</a></p>
-                    <p>Please do not share this link publicly.</p>
-                    <p>Best,<br>Cal</p>
-                `
-            });
-            return res.status(200).send(`
-                <div style="font-family: sans-serif; padding: 40px; text-align: center;">
-                    <h1 style="color: #188038;">Request Approved!</h1>
-                    <p>The private link has been sent to <strong>${email}</strong>.</p>
-                    <p>You can close this tab.</p>
-                </div>
-            `);
-        } else if (action === 'deny') {
-            await transporter.sendMail({
-                from: `"Cal Freeman" <${SMTP_USER}>`,
-                to: email,
-                subject: `Update regarding: ${title}`,
-                html: `
-                    <p>Hi,</p>
-                    <p>Sorry, but we cannot provide the link to <strong>${title}</strong> at the minute.</p>
-                    <p>We appreciate your patience regardless.</p>
-                    <p>Best,<br>Cal</p>
-                `
-            });
-            return res.status(200).send(`
-                <div style="font-family: sans-serif; padding: 40px; text-align: center;">
-                    <h1 style="color: #d93025;">Request Denied</h1>
-                    <p>A polite rejection email has been sent to <strong>${email}</strong>.</p>
-                    <p>You can close this tab.</p>
-                </div>
-            `);
-        } else {
-            return res.status(400).send('Invalid action.');
+        const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'api-key': BREVO_API_KEY
+            },
+            body: JSON.stringify({
+                sender: { name: 'Cal Freeman', email: SENDER_EMAIL },
+                to: [{ email }],
+                ...emailPayload
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            console.error('Brevo resolution email failed:', errorData);
+            return res.status(502).send('Failed to send resolution email.');
         }
+
+        return res.status(200).send(`
+            <div style="font-family: sans-serif; padding: 40px; text-align: center;">
+                ${successResponse}
+                <p>You can close this tab.</p>
+            </div>
+        `);
     } catch (error) {
         console.error('Email error:', error);
         return res.status(500).send('Failed to send resolution email.');
