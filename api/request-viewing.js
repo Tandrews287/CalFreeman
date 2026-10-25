@@ -15,7 +15,11 @@ export default async function handler(req, res) {
     const BREVO_API_KEY = process.env.BREVO_API_KEY;
     const SENDER_EMAIL = process.env.SENDER_EMAIL || 'hello@calfreeman.com';
     const CAL_ALERT_EMAIL = process.env.CAL_ALERT_EMAIL || 'hello@calfreeman.com';
-    const HOST_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : (req.headers.host.includes('localhost') ? `http://${req.headers.host}` : `https://${req.headers.host}`);
+    const requestHost = req.headers.host || process.env.VERCEL_URL || 'localhost:3000';
+    const requestProtocol = req.headers['x-forwarded-proto'] || (requestHost.startsWith('localhost') ? 'http' : 'https');
+    const HOST_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
+        ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+        : `${requestProtocol}://${requestHost}`;
 
     if (!JWT_SECRET || !BREVO_API_KEY) {
         console.error('Missing environment variables for email or JWT setup.');

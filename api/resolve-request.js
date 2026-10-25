@@ -14,7 +14,7 @@ export default async function handler(req, res) {
     const JWT_SECRET = process.env.JWT_SECRET;
     const BREVO_API_KEY = process.env.BREVO_API_KEY;
     const SENDER_EMAIL = process.env.SENDER_EMAIL || 'hello@calfreeman.com';
-    const viewingLink = process.env.SYNC_LINK || process.env.SYCN_LINK;
+    const viewingLink = process.env.SYCN_LINK || process.env.SYNC_LINK;
 
     if (!JWT_SECRET || !BREVO_API_KEY || !viewingLink) {
         return res.status(500).send('Server configuration error.');

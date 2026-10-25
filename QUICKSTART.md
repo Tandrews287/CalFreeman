@@ -110,16 +110,30 @@ Example: Modern dark theme
 
 ### Set the private viewing link
 
-The **YES - Send Link** button uses the `SYNC_LINK` environment variable. Set it
+The **YES - Send Link** button uses the `SYCN_LINK` environment variable. Set it
 to the complete private viewing URL in your hosting provider's environment
 variables, for example:
 
 ```text
-SYNC_LINK=https://your-video-host.example/private-viewing
+SYCN_LINK=https://your-video-host.example/private-viewing
 ```
 
 Redeploy after saving the variable. New approval emails will use the updated
 value.
+
+The request form also requires these production environment variables:
+
+```text
+JWT_SECRET=<long-random-secret>
+BREVO_API_KEY=<Brevo API key>
+SENDER_EMAIL=hello@calfreeman.com
+CAL_ALERT_EMAIL=hello@calfreeman.com
+SYCN_LINK=https://your-video-host.example/private-viewing
+```
+
+Add them under **Vercel → Project Settings → Environment Variables** for the
+**Production** environment, then redeploy. The local `.env.local` file is not
+deployed to Vercel.
 
 ## Common Customizations
 
