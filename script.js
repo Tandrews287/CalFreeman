@@ -283,7 +283,7 @@ if (pvModal && pvTrigger) {
                 body: JSON.stringify({ 
                     email, 
                     marketingOptIn,
-                    title: "SOMETHING YOU CANNOT NAME"
+                    title: "S.Y.C.N"
                 })
             });
             

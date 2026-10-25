@@ -14,9 +14,19 @@ export default async function handler(req, res) {
     const JWT_SECRET = process.env.JWT_SECRET;
     const BREVO_API_KEY = process.env.BREVO_API_KEY;
     const SENDER_EMAIL = process.env.SENDER_EMAIL || 'hello@calfreeman.com';
-    const SYCN_LINK = process.env.SYCN_LINK || '#';
+    const viewingLink = process.env.SYNC_LINK || process.env.SYCN_LINK;
 
-    if (!JWT_SECRET || !BREVO_API_KEY) {
+    if (!JWT_SECRET || !BREVO_API_KEY || !viewingLink) {
+        return res.status(500).send('Server configuration error.');
+    }
+
+    try {
+        const parsedViewingLink = new URL(viewingLink);
+        if (!['http:', 'https:'].includes(parsedViewingLink.protocol)) {
+            throw new Error('Viewing link must use HTTP or HTTPS.');
+        }
+    } catch (error) {
+        console.error('Invalid SYNC_LINK configuration:', error);
         return res.status(500).send('Server configuration error.');
     }
 
@@ -37,7 +47,7 @@ export default async function handler(req, res) {
             htmlContent: `
                 <p>Hi,</p>
                 <p>Thanks for your interest! Here is the private viewing link for <strong>${title}</strong>:</p>
-                <p><a href="${SYCN_LINK}">${SYCN_LINK}</a></p>
+                <p><a href="${viewingLink}">${viewingLink}</a></p>
                 <p>Please do not share this link publicly.</p>
                 <p>Best,<br>Cal</p>
             `

@@ -561,7 +561,7 @@ body.page-ready .load-overlay {
 
 .massive-email {
     display: block;
-    margin: 35.2px 0 17.6px;
+    margin: 35.2px 0 18.48px;
     font-size: clamp(2.1rem, 4.7vw, 3.4rem);
     font-weight: 700;
     color: var(--ink);
@@ -851,7 +851,7 @@ body.page-ready .load-overlay {
         word-break: break-all;
         white-space: normal;
         text-align: center;
-        margin: 26.4px 0 13.2px;
+        margin: 35.2px 0 18.48px;
     }
 
     .massive-footer-email {
@@ -933,7 +933,7 @@ body.page-ready .load-overlay {
 
     .massive-email {
         font-size: min(4.7vw, 1.7rem);
-        margin: 17.6px 0 8.8px;
+        margin: 35.2px 0 18.48px;
     }
 
     .press-list-item {

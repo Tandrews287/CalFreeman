@@ -108,6 +108,19 @@ Example: Modern dark theme
 - Use any traditional web hosting (Bluehost, SiteGround, etc.)
 - Upload files via FTP
 
+### Set the private viewing link
+
+The **YES - Send Link** button uses the `SYNC_LINK` environment variable. Set it
+to the complete private viewing URL in your hosting provider's environment
+variables, for example:
+
+```text
+SYNC_LINK=https://your-video-host.example/private-viewing
+```
+
+Redeploy after saving the variable. New approval emails will use the updated
+value.
+
 ## Common Customizations
 
 ### Change Font Size
