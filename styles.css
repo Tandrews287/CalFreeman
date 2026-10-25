@@ -537,7 +537,7 @@ body.page-ready .load-overlay {
 }
 
 .about-copy p {
-    font-size: 0.99rem;
+    font-size: 1.089rem;
     line-height: 1.6;
     color: var(--ink);
 }
@@ -842,7 +842,7 @@ body.page-ready .load-overlay {
     }
 
     .about-copy p {
-        font-size: 0.9rem;
+        font-size: 0.99rem;
         line-height: 1.55;
     }
 
@@ -923,7 +923,7 @@ body.page-ready .load-overlay {
     }
 
     .about-copy p {
-        font-size: 0.82rem;
+        font-size: 0.902rem;
         line-height: 1.5;
     }
 
